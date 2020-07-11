@@ -1,5 +1,3 @@
-var db = firebase.firestore();
-
 db.collection("cafes").onSnapshot((snapshot) => {
   let list = ``;
   snapshot.forEach((doc) => {
@@ -14,21 +12,15 @@ db.collection("cafes").onSnapshot((snapshot) => {
 });
 
 const addForm = document.querySelector("#add-cafe-form");
-addForm.addEventListener("submit", (event) => {
+addForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  db.collection("cafes")
-    .add({
-      name: addForm["name"].value,
-      city: addForm["city"].value,
-    })
-    .then(() => {
-      addForm.reset();
-    });
+  await db.collection("cafes").add({
+    name: addForm["name"].value,
+    city: addForm["city"].value,
+  });
+  addForm.reset();
 });
 
 function deleteCafe(docId) {
-  db.collection("cafes")
-    .doc(docId)
-    .delete()
-    .then(() => {});
+  db.collection("cafes").doc(docId).delete();
 }
