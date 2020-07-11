@@ -12,8 +12,8 @@ db.collection("cafes").onSnapshot((snapshot) => {
 });
 
 const addForm = document.querySelector("#add-cafe-form");
-addForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+addForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
   await db.collection("cafes").add({
     name: addForm["name"].value,
     city: addForm["city"].value,
@@ -21,6 +21,4 @@ addForm.addEventListener("submit", async (event) => {
   addForm.reset();
 });
 
-function deleteCafe(docId) {
-  db.collection("cafes").doc(docId).delete();
-}
+const deleteCafe = (docId) => db.collection("cafes").doc(docId).delete();
